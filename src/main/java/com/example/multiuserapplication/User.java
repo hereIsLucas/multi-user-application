@@ -15,9 +15,8 @@ import java.util.List;
  **/
 @Getter
 public class User {
-    // Getter und Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String firstName;
     private String lastName;
@@ -27,27 +26,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
     }
 }
