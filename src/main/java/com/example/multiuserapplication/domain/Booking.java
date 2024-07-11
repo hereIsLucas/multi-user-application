@@ -1,6 +1,5 @@
 package com.example.multiuserapplication.domain;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +10,7 @@ import java.util.Date;
  * @created : 10/07/2024, Wednesday
  **/
 @Data
+@Entity
 public class Booking {
 
     @Id
@@ -35,5 +35,9 @@ public class Booking {
         this.day = day;
         this.room = room;
         this.user = user;
+    }
+
+    protected Booking() {
+
     }
 }
