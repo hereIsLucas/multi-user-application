@@ -4,17 +4,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.List;
-
 /**
  * @author : lucas
  * @project : MultiUserApplication
  * @created : 10/07/2024, Wednesday
  **/
-@Getter
+@Data
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
