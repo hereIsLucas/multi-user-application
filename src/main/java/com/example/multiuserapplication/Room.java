@@ -3,7 +3,10 @@ package com.example.multiuserapplication;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * @author : lucas
@@ -20,6 +23,9 @@ public class Room {
     private int floor;
     private double price;
 
+    @OneToMany(mappedBy = "room")
+    private List<Booking> bookings;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -34,6 +40,10 @@ public class Room {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
 
