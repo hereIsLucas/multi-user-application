@@ -21,7 +21,7 @@ public class MultiUserApplication {
     @Bean
     public ApplicationRunner runner (UserRepository userRepository, RoomRepository roomRepository, BookingRepository bookingRepository, DayRepository dayRepository) {
         return args -> {
-            var user = new User("Lucas", "Heroin", "lucasheroin@gmail.com", "lucasgotbounce");
+            var user = new User("SpongeBob", "Squarepants", "sponge@gmail.com", "soapyy");
             var room = new Room("411", 4, 200, List.of());
             var booking = new Booking(new Date(), new Day ("Allday", List.of()), room, user);
 

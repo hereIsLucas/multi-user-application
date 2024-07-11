@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @project : MultiUserApplication
  * @created : 11/07/2024, Thursday
  **/
-public interface DayRepository extends JpaRepository<Day, Long> {
+public interface DayRepository extends JpaRepository<Day, String> {
 }

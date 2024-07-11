@@ -9,7 +9,7 @@ services:
       - '3306'
     environment:
       MYSQL_ROOT_PASSWORD: bbw123
-      MYSQL_DATABASE: lababe
+      MYSQL_DATABASE: brainless
     volumes:
       - ./database:/var/lib/mysql
   phpmyadmin:
