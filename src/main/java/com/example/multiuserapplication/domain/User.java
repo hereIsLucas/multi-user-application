@@ -1,9 +1,6 @@
 package com.example.multiuserapplication.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
  * @created : 10/07/2024, Wednesday
  **/
 @Data
+@Entity
 public class User {
 
     @Id
@@ -31,5 +29,9 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    protected User() {
+
     }
 }
