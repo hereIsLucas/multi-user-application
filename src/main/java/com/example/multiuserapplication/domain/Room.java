@@ -1,23 +1,21 @@
-package com.example.multiuserapplication;
+package com.example.multiuserapplication.domain;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.List;
-
 /**
  * @author : lucas
  * @project : MultiUserApplication
  * @created : 10/07/2024, Wednesday
  **/
-@Getter
+@Data
 public class Room {
-    // Getter und Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private int floor;
@@ -26,24 +24,10 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Booking> bookings;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
+    public Room( String name, int floor, double price, List<Booking> bookings) {
         this.name = name;
-    }
-
-    public void setFloor(int floor) {
         this.floor = floor;
-    }
-
-    public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
 }
-

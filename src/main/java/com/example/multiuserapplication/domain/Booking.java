@@ -1,4 +1,4 @@
-package com.example.multiuserapplication;
+package com.example.multiuserapplication.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
