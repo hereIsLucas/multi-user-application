@@ -1,20 +1,20 @@
 package com.example.multiuserapplication.domain;
 
+
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.Date;
-
 /**
  * @author : lucas
  * @project : MultiUserApplication
  * @created : 10/07/2024, Wednesday
  **/
-@Getter
+@Data
 public class Booking {
-    // Getter und Setter
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private Date date;
 
@@ -30,23 +30,10 @@ public class Booking {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDate(Date date) {
+    public Booking(Date date, Day day, Room room, User user) {
         this.date = date;
-    }
-
-    public void setDay(Day day) {
         this.day = day;
-    }
-
-    public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public void setUser(User user) {
         this.user = user;
     }
 }
