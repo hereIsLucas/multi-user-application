@@ -1,7 +1,10 @@
 package com.example.multiuserapplication;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * @author : lucas
@@ -14,7 +17,14 @@ public class Day {
     @Id
     private String name;
 
+    @OneToMany(mappedBy = "day")
+    private List<Booking> bookings;
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

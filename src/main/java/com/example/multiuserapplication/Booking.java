@@ -1,9 +1,6 @@
 package com.example.multiuserapplication;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.Date;
@@ -20,12 +17,17 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date date;
-    private String day;
 
     @ManyToOne
+    @JoinColumn(name = "day_name", referencedColumnName = "name")
+    private Day day;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public void setId(int id) {
@@ -36,7 +38,7 @@ public class Booking {
         this.date = date;
     }
 
-    public void setDay(String day) {
+    public void setDay(Day day) {
         this.day = day;
     }
 
