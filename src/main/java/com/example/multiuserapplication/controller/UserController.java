@@ -1,14 +1,17 @@
+package com.example.multiuserapplication.controller;
+
 import com.example.multiuserapplication.domain.Task;
-import com.example.multiuserapplication.domain.TaskMapper;
 import com.example.multiuserapplication.domain.TasksUser;
 import com.example.multiuserapplication.dto.TaskDTO;
 import com.example.multiuserapplication.dto.TasksUserDTO;
+import com.example.multiuserapplication.mapper.TaskMapper;
 import com.example.multiuserapplication.repositories.TaskRepository;
 import com.example.multiuserapplication.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +32,6 @@ public class UserController {
     @Autowired
     public UserController(UserRepository userRepository, TaskRepository taskRepository,
                           TaskMapper taskMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        super();
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
@@ -117,5 +119,51 @@ public class UserController {
     @GetMapping("/currentusernameAuthPrinc")
     public String currentUserName(@AuthenticationPrincipal TasksUser customUser) {
         return customUser.getUsername();
+    }
+
+    // Admin endpoints for user management
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/admin")
+    public ResponseEntity<?> createUserAdmin(@RequestBody TasksUserDTO userDTO) {
+        if (userRepository.findOneByUsername(userDTO.getUsername()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists.");
+        }
+        TasksUser user = taskMapper.mapUserDtoToEntity(userDTO);
+        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully.");
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<?> updateUserAdmin(@PathVariable Long id, @RequestBody TasksUserDTO updatedUserDTO) {
+        return userRepository.findById(id).map(user -> {
+            user.setUsername(updatedUserDTO.getUsername());
+            user.setPassword(bCryptPasswordEncoder.encode(updatedUserDTO.getPassword()));
+            user.setRoles(updatedUserDTO.getRoles());
+            userRepository.save(user);
+            return ResponseEntity.ok("User updated successfully.");
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<?> deleteUserAdmin(@PathVariable Long id) {
+        return userRepository.findById(id).map(user -> {
+            userRepository.delete(user);
+            return ResponseEntity.ok().body("User deleted successfully.");
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin")
+    public ResponseEntity<List<TasksUserDTO>> getAllUsersAdmin() {
+        List<TasksUser> users = userRepository.findAll();
+        List<TasksUserDTO> userDTOs = taskMapper.mapUsersToDtoList(users);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userDTOs);
     }
 }

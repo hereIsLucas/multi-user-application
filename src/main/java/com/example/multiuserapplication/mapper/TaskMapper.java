@@ -1,5 +1,7 @@
-package com.example.multiuserapplication.domain;
+package com.example.multiuserapplication.mapper;
 
+import com.example.multiuserapplication.domain.Task;
+import com.example.multiuserapplication.domain.TasksUser;
 import com.example.multiuserapplication.dto.TaskDTO;
 import com.example.multiuserapplication.dto.TasksUserDTO;
 import org.springframework.stereotype.Component;
