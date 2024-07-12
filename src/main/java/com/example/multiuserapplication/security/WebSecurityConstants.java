@@ -9,7 +9,7 @@ public class
 
 
 
-----/-++WebSecurityConstants {
+WebSecurityConstants {
     @Value("${jwt.secret}")
     public static final String SECRET = "(G+KaPdSgVkYp3s6v9y$B&E)H@McQeThWmZq4t7w!z%C*F-JaNdRgUkXn2r5u8x/";
     public static final long JWT_TOKEN_VALIDITY = 864_000_000; // 10 days
