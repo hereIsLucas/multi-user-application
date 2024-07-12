@@ -62,51 +62,51 @@ MultiUserApplication ist eine Webanwendung, die es mehreren Benutzern ermöglich
 - H2 Database
 - Maven
 ## Projektstruktur
-src/
-├── main/
-│ ├── java/
-│ │ ├── com/
-│ │ │ ├── example/
-│ │ │ │ ├── multiuserapplication/
-│ │ │ │ │ ├── controller/
-│ │ │ │ │ │ ├── BookingController.java
-│ │ │ │ │ │ ├── TaskController.java
-│ │ │ │ │ │ ├── UserController.java
-│ │ │ │ │ ├── domain/
-│ │ │ │ │ │ ├── Booking.java
-│ │ │ │ │ │ ├── Day.java
-│ │ │ │ │ │ ├── Room.java
-│ │ │ │ │ │ ├── Task.java
-│ │ │ │ │ │ ├── TasksUser.java
-│ │ │ │ │ │ ├── TasksUserRoles.java
-│ │ │ │ │ ├── dto/
-│ │ │ │ │ │ ├── TaskDTO.java
-│ │ │ │ │ │ ├── TasksUserDTO.java
-│ │ │ │ │ ├── mapper/
-│ │ │ │ │ │ ├── TaskMapper.java
-│ │ │ │ │ ├── repositories/
-│ │ │ │ │ │ ├── BookingRepository.java
-│ │ │ │ │ │ ├── DayRepository.java
-│ │ │ │ │ │ ├── RoomRepository.java
-│ │ │ │ │ │ ├── TaskRepository.java
-│ │ │ │ │ │ ├── UserRepository.java
-│ │ │ │ │ ├── security/
-│ │ │ │ │ │ ├── JwtAuthenticationFilter.java
-│ │ │ │ │ │ ├── JwtAuthorizationFilter.java
-│ │ │ │ │ │ ├── JwtTokenUtil.java
-│ │ │ │ │ │ ├── TasksUserDetailsService.java
-│ │ │ │ │ │ ├── WebSecurity.java
-│ │ │ │ │ │ ├── WebSecurityConstants.java
-│ │ │ │ │ ├── config/
-│ │ │ │ │ │ ├── OpenApiConfig.java
-│ ├── resources/
-│ │ ├── application.properties
-├── test/
-│ ├── java/
-│ │ ├── com/
-│ │ │ ├── example/
-│ │ │ │ ├── multiuserapplication/
-│ │ │ │ │ ├── EndToEndTests.java
+src/\
+├── main/\
+│ ├── java/\
+│ │ ├── com/\
+│ │ │ ├── example/\
+│ │ │ │ ├── multiuserapplication/\
+│ │ │ │ │ ├── controller/\
+│ │ │ │ │ │ ├── BookingController.java\
+│ │ │ │ │ │ ├── TaskController.java\
+│ │ │ │ │ │ ├── UserController.java\
+│ │ │ │ │ ├── domain/\
+│ │ │ │ │ │ ├── Booking.java\
+│ │ │ │ │ │ ├── Day.java\
+│ │ │ │ │ │ ├── Room.java\
+│ │ │ │ │ │ ├── Task.java\
+│ │ │ │ │ │ ├── TasksUser.java\
+│ │ │ │ │ │ ├── TasksUserRoles.java\
+│ │ │ │ │ ├── dto/\
+│ │ │ │ │ │ ├── TaskDTO.java\
+│ │ │ │ │ │ ├── TasksUserDTO.java\
+│ │ │ │ │ ├── mapper/\
+│ │ │ │ │ │ ├── TaskMapper.java\
+│ │ │ │ │ ├── repositories\
+│ │ │ │ │ │ ├── BookingRepository.java\
+│ │ │ │ │ │ ├── DayRepository.java\
+│ │ │ │ │ │ ├── RoomRepository.java\
+│ │ │ │ │ │ ├── TaskRepository.java\
+│ │ │ │ │ │ ├── UserRepository.java\
+│ │ │ │ │ ├── security/\
+│ │ │ │ │ │ ├── JwtAuthenticationFilter.java\
+│ │ │ │ │ │ ├── JwtAuthorizationFilter.java\
+│ │ │ │ │ │ ├── JwtTokenUtil.java\
+│ │ │ │ │ │ ├── TasksUserDetailsService.java\
+│ │ │ │ │ │ ├── WebSecurity.java\
+│ │ │ │ │ │ ├── WebSecurityConstants.java\
+│ │ │ │ │ ├── config/\
+│ │ │ │ │ │ ├── OpenApiConfig.java\
+│ ├── resources/\
+│ │ ├── application.properties\
+├── test/\
+│ ├── java/\
+│ │ ├── com/\
+│ │ │ ├── example/\
+│ │ │ │ ├── multiuserapplication/\
+│ │ │ │ │ ├── EndToEndTests.java\
 │ ├── resources/
 
 ## Installation
