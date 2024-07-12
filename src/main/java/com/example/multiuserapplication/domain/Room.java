@@ -1,14 +1,15 @@
 package com.example.multiuserapplication.domain;
-
-import jakarta.persistence.*;
-import lombok.Data;
-
-import java.util.List;
 /**
  * @author : lucas
  * @project : MultiUserApplication
  * @created : 10/07/2024, Wednesday
  **/
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
+
 @Entity
 @Data
 public class Room {
