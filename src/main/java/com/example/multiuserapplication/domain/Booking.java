@@ -30,7 +30,7 @@ public class Booking {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public Booking(Date date, Day day, Room room, User user) {
+    public Booking(Date date, Day day, Room room, TasksUser user) {
         this.date = date;
         this.day = day;
         this.room = room;

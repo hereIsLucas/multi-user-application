@@ -3,7 +3,7 @@ package com.example.multiuserapplication;
 import com.example.multiuserapplication.domain.Booking;
 import com.example.multiuserapplication.domain.Day;
 import com.example.multiuserapplication.domain.Room;
-import com.example.multiuserapplication.domain.User;
+import com.example.multiuserapplication.domain.TasksUser;
 import com.example.multiuserapplication.repositories.BookingRepository;
 import com.example.multiuserapplication.repositories.DayRepository;
 import com.example.multiuserapplication.repositories.RoomRepository;
@@ -21,13 +21,13 @@ public class MultiUserApplication {
     @Bean
     public ApplicationRunner runner (UserRepository userRepository, RoomRepository roomRepository, BookingRepository bookingRepository, DayRepository dayRepository) {
         return args -> {
-            var user = new User("SpongeBob", "Squarepants", "sponge@gmail.com", "soapyy");
+            var tasksUser = new TasksUser("SpongeBob", "Squarepants", "sponge@gmail.com", "Grafik" + "Designer");
             var room = new Room("411", 4, 200, List.of());
-            var booking = new Booking(new Date(), new Day ("Allday", List.of()), room, user);
+            var booking = new Booking(new Date(), new Day ("Allday", List.of()), room, tasksUser);
 
             dayRepository.save(new Day("Allday", List.of()));
 
-            userRepository.save(user);
+            userRepository.save(tasksUser);
             roomRepository.save(room);
             bookingRepository.saveAndFlush(booking);
             userRepository.flush();
