@@ -122,19 +122,16 @@ src/
 1. Klone das Repository:
    ```bash
    git clone https://github.com/hereIsLucas/MultiUserApplication.git
-Navigiere in das Projektverzeichnis:
-bash
-Code kopieren
-cd MultiUserApplication
-Baue das Projekt mit Maven:
-bash
-Code kopieren
-mvn clean install
-Starte die Anwendung:
-bash
-Code kopieren
-mvn spring-boot:run
-Verwendung
+2. Navigiere in das Projektverzeichnis:
+      ```bash
+      cd MultiUserApplication
+3. Navigiere in das Projektverzeichnis:
+      ```bash
+      mvn clean install
+3. Navigiere in das Projektverzeichnis:
+      ```bash
+      mvn spring-boot:run
+
 Nach dem Starten der Anwendung ist sie unter http://localhost:8080 erreichbar.
 
 API-Dokumentation
@@ -147,9 +144,10 @@ POST /users/sign-up
 Beispiel Payload:
 json
 Code kopieren
+
 {
-"username": "testuser",
-"password": "password"
+"username": "root",
+"password": "bbw123"
 }
 
 ### Erklärung:
@@ -165,4 +163,27 @@ Code kopieren
 - **Autoren**: Eine Liste der Autoren des Projekts.
 - **Lizenz**: Lizenzinformationen für das Projekt.
 
-Diese README-Datei bietet einen umfassenden Überblick über das Projekt und hilft neuen Entwicklern, schnell zu verstehen, wie sie es installieren
+## Sicherheit
+Die Anwendung verwendet JWT für die Authentifizierung und autorisierte Anfragen. Sicherheitskonfigurationen befinden sich in der WebSecurity-Klasse.
+
+## End-to-End-Tests
+End-to-End-Tests werden mit MockMvc und JUnit durchgeführt. Die Testklasse EndToEndTests enthält Tests für die wichtigsten Funktionalitäten.
+
+
+### Code kopieren (java)
+package com.example.multiuserapplication;
+
+import com.example.multiuserapplication.domain.TasksUser;
+import com.example.multiuserapplication.repositories.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org
+
