@@ -28,7 +28,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private TasksUser user;
 
     public Booking(Date date, Day day, Room room, TasksUser user) {
         this.date = date;

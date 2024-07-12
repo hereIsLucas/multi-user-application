@@ -1,4 +1,4 @@
-package com.example.multiuserapplication.domain;
+package com.example.multiuserapplication.dto;
 
 import lombok.Builder;
 

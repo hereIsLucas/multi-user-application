@@ -2,6 +2,7 @@ package com.example.multiuserapplication.controller;
 
 
 import com.example.multiuserapplication.domain.*;
+import com.example.multiuserapplication.dto.TaskDTO;
 import com.example.multiuserapplication.repositories.TaskRepository;
 import com.example.multiuserapplication.repositories.UserRepository;
 import org.springframework.http.HttpStatus;

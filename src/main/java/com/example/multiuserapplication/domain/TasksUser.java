@@ -47,4 +47,6 @@ public class TasksUser implements Serializable {
 		this.role = TasksUserRoles.MEMBER;
 	}
 
+	public void setRoles(Object roles) {
+	}
 }
