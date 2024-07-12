@@ -1,14 +1,11 @@
 package com.example.multiuserapplication.controller;
 
-/**
- * @author : lucas
- * @project : MultiUserApplication
- * @created : 12/07/2024, Friday
- **/
 import com.example.multiuserapplication.domain.Booking;
 import com.example.multiuserapplication.domain.TasksUser;
 import com.example.multiuserapplication.repositories.BookingRepository;
 import com.example.multiuserapplication.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/bookings")
+@Tag(name = "Bookings", description = "API für Buchungen")
 public class BookingController {
 
     private final BookingRepository bookingRepository;
@@ -33,7 +31,7 @@ public class BookingController {
         this.userRepository = userRepository;
     }
 
-    // Get all bookings for the authenticated user
+    @Operation(summary = "Get all bookings for the authenticated user")
     @GetMapping
     public ResponseEntity<List<Booking>> getAllBookings(@AuthenticationPrincipal TasksUser authenticatedUser) {
         List<Booking> bookings = bookingRepository.findByUserId(authenticatedUser.getId());
@@ -43,7 +41,7 @@ public class BookingController {
                 .body(bookings);
     }
 
-    // Create a new booking for the authenticated user
+    @Operation(summary = "Create a new booking for the authenticated user")
     @PostMapping
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking, @AuthenticationPrincipal TasksUser authenticatedUser) {
         booking.setUser(authenticatedUser);
@@ -54,7 +52,7 @@ public class BookingController {
                 .body(savedBooking);
     }
 
-    // Update an existing booking for the authenticated user
+    @Operation(summary = "Update an existing booking for the authenticated user")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBooking(@PathVariable Long id, @RequestBody Booking updatedBooking, @AuthenticationPrincipal TasksUser authenticatedUser) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
@@ -73,7 +71,7 @@ public class BookingController {
         }
     }
 
-    // Delete a booking for the authenticated user
+    @Operation(summary = "Delete a booking for the authenticated user")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBooking(@PathVariable Long id, @AuthenticationPrincipal TasksUser authenticatedUser) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
@@ -90,9 +88,7 @@ public class BookingController {
         }
     }
 
-    // Admin endpoints
-
-    // Get all bookings (admin only)
+    @Operation(summary = "Get all bookings (admin only)")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public ResponseEntity<List<Booking>> getAllBookingsAdmin() {
@@ -103,7 +99,7 @@ public class BookingController {
                 .body(bookings);
     }
 
-    // Create a new booking for any user (admin only)
+    @Operation(summary = "Create a new booking for any user (admin only)")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin")
     public ResponseEntity<String> createBookingAdmin(@RequestBody Booking booking) {
@@ -119,7 +115,7 @@ public class BookingController {
         }
     }
 
-    // Update any booking (admin only)
+    @Operation(summary = "Update any booking (admin only)")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/{id}")
     public ResponseEntity<?> updateBookingAdmin(@PathVariable Long id, @RequestBody Booking updatedBooking) {
@@ -137,7 +133,7 @@ public class BookingController {
         }
     }
 
-    // Delete any booking (admin only)
+    @Operation(summary = "Delete any booking (admin only)")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<?> deleteBookingAdmin(@PathVariable Long id) {

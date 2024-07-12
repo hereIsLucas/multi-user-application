@@ -1,11 +1,13 @@
 package com.example.multiuserapplication.controller;
 
-
-import com.example.multiuserapplication.domain.*;
+import com.example.multiuserapplication.domain.Task;
+import com.example.multiuserapplication.domain.TasksUser;
 import com.example.multiuserapplication.dto.TaskDTO;
 import com.example.multiuserapplication.mapper.TaskMapper;
 import com.example.multiuserapplication.repositories.TaskRepository;
 import com.example.multiuserapplication.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-//@RestController
-//@RequestMapping("/tasks")
+@RestController
+@RequestMapping("/tasks")
+@Tag(name = "Tasks", description = "API für Aufgaben")
 public class TaskController {
     static Logger log = Logger.getAnonymousLogger();
-    //@Autowired
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final TaskMapper taskMapper;
@@ -31,8 +33,7 @@ public class TaskController {
         this.taskMapper = taskMapper;
     }
 
-    // https://spring.io/guides/gs/rest-service-cors/
-    // Aufgabe 2 – TasksList TaskDTO send!
+    @Operation(summary = "Get all tasks")
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<List<TaskDTO>> getTasks() {
@@ -44,16 +45,15 @@ public class TaskController {
                 .body(taskDTOs);
     }
 
-    // Aufgabe 3 - Einzelner TaskDTO laden
+    @Operation(summary = "Get a task by ID")
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long id) {
         if (taskRepository.findById(id).isPresent()) {
-            // get the tsk is there !
             Task task = taskRepository.findById(id).get();
             TaskDTO taskDTO = taskMapper.mapTaskToDTO(task);
 
             return ResponseEntity
-                    .status(HttpStatus.OK) // http 200 ok
+                    .status(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(taskDTO);
         } else {
@@ -61,11 +61,9 @@ public class TaskController {
                     .notFound()
                     .build(); // http 404
         }
-
-
     }
 
-    // Aufgabe 4 - TaskDTO adding
+    @Operation(summary = "Add a new task")
     @PostMapping()
     public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO taskDTO) {
         Task task = taskMapper.mapsTaskDtoToEntity(taskDTO);
@@ -76,17 +74,9 @@ public class TaskController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(savedTaskDTO);
     }
-/*
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    Task newTask(@RequestBody Task newTask) {
-        log.info(newTask.toString());
-        return taskRepository.save(newTask);
-    }
-*/
-    // Aufgabe 5 - Task bearbeiten
+
+    @Operation(summary = "Edit an existing task")
     @PutMapping("/{id}")
-//    @ResponseStatus(HttpStatus.RESET_CONTENT)
     public ResponseEntity<TaskDTO> editTask(@PathVariable long id, @RequestBody TaskDTO taskDTO) {
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isEmpty()) {
@@ -101,7 +91,7 @@ public class TaskController {
         return ResponseEntity.ok(savedTaskDTO);
     }
 
-    // Aufgabe 6 - Task löschen
+    @Operation(summary = "Delete a task by ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<TaskDTO> deleteTask(@PathVariable long id) {
         if (taskRepository.findById(id).isPresent()) {
@@ -116,7 +106,7 @@ public class TaskController {
         }
     }
 
-    // Aufgabe 7 - DTO-Tasksliste löschen
+    @Operation(summary = "Delete all tasks")
     @DeleteMapping("")
     public ResponseEntity<List<TaskDTO>> deleteAllTasks() {
         if (taskRepository.findAll().isEmpty()) {
@@ -128,27 +118,23 @@ public class TaskController {
                     .build();
         }
     }
-//https://www.springcloud.io/post/2022-02/spring-security-get-current-user/#gsc.tab=0
-    // get authenticated user
+
+    @Operation(summary = "Get tasks for the authenticated user")
     @GetMapping("/my-tasks")
     public ResponseEntity<List<TaskDTO>> getTasksForCurrentUser() {
-        // Get the authenticated user's username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // find the current user
         if (userRepository.findOneByUsername(username).isPresent()) {
             TasksUser tasksUser = userRepository.findOneByUsername(username).get();
             log.info(tasksUser.toString());
 
-            // Pass the username to the task service
             List<Task> tasks = taskRepository.findTasksByTasksUserId(tasksUser.getId());
 
-            return ResponseEntity.ok( taskMapper.mapTasksToDtoList(tasks));
+            return ResponseEntity.ok(taskMapper.mapTasksToDtoList(tasks));
         } else {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND) // 404
                     .build(); // empty body
         }
     }
-
 }

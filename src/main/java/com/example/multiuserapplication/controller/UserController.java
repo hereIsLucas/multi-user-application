@@ -7,6 +7,8 @@ import com.example.multiuserapplication.dto.TasksUserDTO;
 import com.example.multiuserapplication.mapper.TaskMapper;
 import com.example.multiuserapplication.repositories.TaskRepository;
 import com.example.multiuserapplication.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Users", description = "API für Benutzerverwaltung")
 public class UserController {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
@@ -38,13 +41,14 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    // User endpoints
+    @Operation(summary = "Benutzer registrieren")
     @PostMapping("/sign-up")
     public void signUp(@RequestBody TasksUser user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
+    @Operation(summary = "Alle Benutzer abrufen")
     @GetMapping
     public ResponseEntity<List<TasksUserDTO>> getAllUsers() {
         List<TasksUser> users = userRepository.findAll();
@@ -55,6 +59,7 @@ public class UserController {
                 .body(userDTOs);
     }
 
+    @Operation(summary = "Benutzerdaten aktualisieren")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody TasksUserDTO updatedUserDTO,
                                         @AuthenticationPrincipal TasksUser authenticatedUser) {
@@ -71,7 +76,7 @@ public class UserController {
         }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));
     }
 
-    // Tasks Endpoint
+    @Operation(summary = "Neue Aufgabe für einen Benutzer erstellen")
     @PostMapping("/{userId}/tasks")
     public ResponseEntity<TaskDTO> createUserTask(@PathVariable Long userId, @RequestBody TaskDTO taskDTO) {
         Optional<TasksUser> optionalUser = userRepository.findById(userId);
@@ -90,6 +95,7 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Alle Aufgaben eines Benutzers abrufen")
     @GetMapping("/{userId}/tasks")
     public ResponseEntity<Iterable<TaskDTO>> getUserTasks(@PathVariable Long userId) {
         Optional<TasksUser> optionalUser = userRepository.findById(userId);
@@ -106,23 +112,25 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Aktuellen Benutzernamen abrufen (Principal)")
     @GetMapping("/currentusername")
     public String currentUserName(Principal principal) {
         return principal.getName();
     }
 
+    @Operation(summary = "Aktuellen Benutzernamen abrufen (Authentication)")
     @GetMapping("/currentusernameAuth")
     public String currentUserName(Authentication authentication) {
         return authentication.getName();
     }
 
+    @Operation(summary = "Aktuellen Benutzernamen abrufen (AuthenticationPrincipal)")
     @GetMapping("/currentusernameAuthPrinc")
     public String currentUserName(@AuthenticationPrincipal TasksUser customUser) {
         return customUser.getUsername();
     }
 
-    // Admin endpoints for user management
-
+    @Operation(summary = "Neuen Benutzer als Administrator erstellen")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin")
     public ResponseEntity<?> createUserAdmin(@RequestBody TasksUserDTO userDTO) {
@@ -135,6 +143,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully.");
     }
 
+    @Operation(summary = "Benutzerdaten als Administrator aktualisieren")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/{id}")
     public ResponseEntity<?> updateUserAdmin(@PathVariable Long id, @RequestBody TasksUserDTO updatedUserDTO) {
@@ -147,6 +156,7 @@ public class UserController {
         }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));
     }
 
+    @Operation(summary = "Benutzer als Administrator löschen")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<?> deleteUserAdmin(@PathVariable Long id) {
@@ -156,6 +166,7 @@ public class UserController {
         }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));
     }
 
+    @Operation(summary = "Alle Benutzer als Administrator abrufen")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public ResponseEntity<List<TasksUserDTO>> getAllUsersAdmin() {
