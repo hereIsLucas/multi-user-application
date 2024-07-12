@@ -137,13 +137,7 @@ Nach dem Starten der Anwendung ist sie unter http://localhost:8080 erreichbar.
 API-Dokumentation
 Die API-Dokumentation kann mit Swagger aufgerufen werden. Navigiere zu http://localhost:8080/swagger-ui.html.
 
-API-Endpunkte
-Benutzerregistrierung und Authentifizierung
-Registrierung:
-POST /users/sign-up
-Beispiel Payload:
-json
-Code kopieren
+Wenn du die Test anschauen willst kannst du unter ./postmanTest.json die Test in Postman hineinfügen und austesten.
 
 {
 "username": "root",
