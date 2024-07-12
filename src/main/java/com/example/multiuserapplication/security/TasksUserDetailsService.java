@@ -1,8 +1,9 @@
-package ch.clip.security6.simple.taskmanager.security;
+package com.example.multiuserapplication.security;
+
 
 
 import com.example.multiuserapplication.domain.TasksUser;
-import com.example.multiuserapplication.domain.model.UserRepository;
+import com.example.multiuserapplication.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TasksUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public TasksUserDetailsService(UserRepository userRepository) {
@@ -23,16 +24,12 @@ public class TasksUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        final TasksUser tasksUser = userRepository.findOneByUsername(username).get();
-       if (tasksUser == null) {
-           throw new UsernameNotFoundException(username);
-       }
-       UserDetails user = User
+
+        return User
                .withUsername(tasksUser.getUsername())
                .password(tasksUser.getPassword())
                .roles(tasksUser.getRole())
 //               .authorities(cinemaUser.getAuthorities())
                .build();
-
-        return user;
     }
 }

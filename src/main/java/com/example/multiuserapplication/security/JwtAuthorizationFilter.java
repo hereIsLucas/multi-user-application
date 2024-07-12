@@ -1,4 +1,5 @@
-package ch.clip.security6.simple.taskmanager.security;
+package com.example.multiuserapplication.security;
+
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

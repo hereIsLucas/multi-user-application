@@ -1,4 +1,4 @@
-package ch.clip.security6.simple.taskmanager.security;
+package com.example.multiuserapplication.security;
 
 
 import com.example.multiuserapplication.domain.TasksUser;
@@ -33,7 +33,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 //@Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     static Logger log = Logger.getLogger("JwtAuthenticationFilter");
-    private JwtTokenUtil jwtTokenUtil;
+    private ch.clip.security6.simple.taskmanager.security.JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
